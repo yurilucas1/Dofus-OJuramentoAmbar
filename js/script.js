@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
       cube.classList.add('cube');
 
       if (emptySquares.has(pos)) {
-        cube.style.opacity = '0.5';
+        cube.style.opacity = '0';
         cube.style.pointerEvents = 'none';
       }
 
