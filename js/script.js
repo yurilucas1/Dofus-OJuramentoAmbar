@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     { name: 'malalfa', img: 'malalfa.png' },
     { name: 'malarvore', img: 'malarvore.png' },
     { name: 'malpik', img: 'malpik.png' },
-    { name: 'malzerb', img: 'malzerb.png' }
+    { name: 'malzerb', img: 'malzerb.png' },
+    { name: 'Voce', img: 'Sacreir.png' }
   ];
 
   let selectedMob = null;
