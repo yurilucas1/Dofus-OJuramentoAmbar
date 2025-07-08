@@ -11,10 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let selectedMob = null;
 
-  // Render monsters in sidebar (above controls)
+  // Render monsters in sidebar
   sidebar.insertAdjacentHTML('afterbegin', monsters.map(m => `
     <div class="opcao" data-img="${m.img}" title="${m.name}">
-      <img src="img/${m.img}" alt="${m.name}" style="">
+      <img src="img/${m.img}" alt="${m.name}">
       <span>${m.name}</span>
     </div>
   `).join(''));
@@ -27,13 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Conjunto de posições vazias no grid
+  // Posições vazias
   const emptySquares = new Set([
     '0,0','0,1','0,2','0,3','0,4','0,5','0,6','0,10','0,11','0,12','0,18','0,19',
-    '1,0','1,1','1,2','1,3','1,4','1,7','1,11','1,12','1,15','1,19',
-    '2,0','2,1','2,2','2,3','2,11','2,12','2,16',
+    '1,0','1,1','1,2','1,3','1,4','1,11','1,12','1,15','1,19',
+    '2,0','2,1','2,2','2,3','2,11','2,12',
     '3,0','3,1','3,2','3,6','3,11',
-    '4,0','4,1','4,6', '4,11',
+    '4,0','4,1','4,6','4,11',
     '5,0','5,1','5,10','5,11','5,16',
     '6,0','6,1','6,7','6,8','6,9','6,10','6,11','6,12','6,19',
     '7,0','7,1','7,2','7,7','7,12','7,13','7,17','7,18','7,19',
@@ -51,15 +51,40 @@ document.addEventListener('DOMContentLoaded', () => {
     '19,0','19,1','19,2','19,3','19,4','19,5','19,6','19,7','19,8','19,9','19,10','19,11','19,14','19,15','19,16','19,17','19,18','19,19'
   ]);
 
+  // Posições com blocos mais altos
+  const heightSquares = new Map([
+    ['1,7',2],
+    ['2,16',2],
+    ['3,4',2],['3,13',2],
+    ['4,8',2],['4,18',2],
+    ['6,5',2],['6,15',2],
+    ['7,9',2],
+    ['8,11',2],
+    ['10,10',2],
+    ['11,5',2],['11,12',2],['11,15',2],
+    ['14,7',2],['14,17',2],
+    ['15,3',2],['15,12',2],['15,15',2],
+    ['16,6',2],
+  ]);
+
   for(let row = 0; row < 20; row++) {
     for(let col = 0; col < 20; col++) {
       const pos = `${row},${col}`;
       const cube = document.createElement('div');
       cube.classList.add('cube');
 
-      if(emptySquares.has(pos)) {
-        cube.style.opacity = '0';
+      if (emptySquares.has(pos)) {
+        cube.style.opacity = '0.5';
         cube.style.pointerEvents = 'none';
+      }
+
+      // Aumenta altura se a posição estiver no tallSquares
+      if (heightSquares.has(pos)) {
+        const scale = heightSquares.get(pos);
+        cube.style.transform = `scaleZ(${scale})`;
+        cube.style.transform = 'translateZ(20px)';
+        cube.style.transformOrigin = 'bottom';
+        //Alterar faces.
       }
 
       ['front', 'back', 'right', 'left', 'top', 'bottom'].forEach(faceName => {
@@ -69,20 +94,18 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       cube.addEventListener('click', () => {
-        if(!selectedMob) {
+        if (!selectedMob) {
           alert('Selecione um monstro na sidebar primeiro!');
           return;
         }
         const frontFace = cube.querySelector('.front');
-        frontFace.style.backgroundImage = ''; // Remove background-image padrão
+        frontFace.style.backgroundImage = '';
 
-        // Cria a imagem dentro da face front
         let img = frontFace.querySelector('img');
         if (!img) {
           img = document.createElement('img');
           frontFace.appendChild(img);
 
-          // Estiliza a imagem para ficar centralizada e rotacionada
           img.style.position = 'absolute';
           img.style.top = '50%';
           img.style.left = '50%';
@@ -113,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Deselecionar monstro ao clicar fora da sidebar
   document.body.addEventListener('click', e => {
-    if(!e.target.closest('#sidebar')) {
+    if (!e.target.closest('#sidebar')) {
       sidebar.querySelectorAll('.opcao').forEach(el => el.classList.remove('selecionada'));
       selectedMob = null;
     }
@@ -136,7 +159,6 @@ document.addEventListener('DOMContentLoaded', () => {
     rotateXVal.textContent = rotX;
     rotateZVal.textContent = rotZ;
 
-    // Ajusta o tamanho dos cubos via scale
     mapContainer.style.transform = `
       scale(${zoom}) 
       rotateX(${rotX}deg) 
@@ -145,10 +167,8 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-  // Atualiza no load
   updateTransform();
 
-  // Eventos de mudança
   zoomRange.addEventListener('input', updateTransform);
   rotateXRange.addEventListener('input', updateTransform);
   rotateZRange.addEventListener('input', updateTransform);
