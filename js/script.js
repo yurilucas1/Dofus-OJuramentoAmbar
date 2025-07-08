@@ -52,19 +52,20 @@ document.addEventListener('DOMContentLoaded', () => {
   ]);
 
   // Posições com blocos mais altos
+  let valor = 1.4;
   const heightSquares = new Map([
-    ['1,7',2],
-    ['2,16',2],
-    ['3,4',2],['3,13',2],
-    ['4,8',2],['4,18',2],
-    ['6,5',2],['6,15',2],
-    ['7,9',2],
-    ['8,11',2],
-    ['10,10',2],
-    ['11,5',2],['11,12',2],['11,15',2],
-    ['14,7',2],['14,17',2],
-    ['15,3',2],['15,12',2],['15,15',2],
-    ['16,6',2],
+    ['1,7',valor],
+    ['2,16',valor],
+    ['3,4',valor],['3,13',valor],
+    ['4,8',valor],['4,18',valor],
+    ['6,5',valor],['6,15',valor],
+    ['7,9',valor],
+    ['8,11',valor],
+    ['10,10',valor],
+    ['11,5',valor],['11,12',valor],['11,15',valor],
+    ['14,7',valor],['14,17',valor],
+    ['15,3',valor],['15,12',valor],['15,15',valor],
+    ['16,6',valor],
   ]);
 
   for(let row = 0; row < 20; row++) {
@@ -80,11 +81,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Aumenta altura se a posição estiver no tallSquares
       if (heightSquares.has(pos)) {
-        const scale = heightSquares.get(pos);
-        cube.style.transform = `scaleZ(${scale})`;
-        cube.style.transform = 'translateZ(20px)';
-        cube.style.transformOrigin = 'bottom';
-        //Alterar faces.
+          const scale = heightSquares.get(pos);
+          cube.style.transform = `scaleZ(${scale}) translateZ(6px)`;
+          cube.style.transformOrigin = 'bottom';
+		  cube.style.pointerEvents = 'none';
       }
 
       ['front', 'back', 'right', 'left', 'top', 'bottom'].forEach(faceName => {
