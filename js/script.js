@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ]);
 
   // Posições com blocos mais altos
-  let valor = 1.4;
+  let valor = .9;
   const heightSquares = new Map([
     ['1,7',valor],
     ['2,16',valor],
@@ -80,20 +80,22 @@ document.addEventListener('DOMContentLoaded', () => {
         cube.style.pointerEvents = 'none';
       }
 
-      // Aumenta altura se a posição estiver no tallSquares
+      // Aumenta altura se a posição estiver no heightSquares
       if (heightSquares.has(pos)) {
           const scale = heightSquares.get(pos);
-          cube.style.transform = `scaleZ(${scale}) translateZ(6px)`;
+          cube.style.transform = `scaleZ(${scale}) translateZ(12px)`;
           cube.style.transformOrigin = 'bottom';
-		  cube.style.pointerEvents = 'none';
+          cube.style.pointerEvents = 'none';
       }
 
-      ['front', 'back', 'right', 'left', 'top', 'bottom'].forEach(faceName => {
+      // Adiciona as faces front, left e bottom
+      ['front','left', 'bottom'].forEach(faceName => {
         const face = document.createElement('div');
         face.classList.add('face', faceName);
         cube.appendChild(face);
       });
 
+      // Clique para adicionar monstro na face front
       cube.addEventListener('click', () => {
         if (!selectedMob) {
           alert('Selecione um monstro na sidebar primeiro!');
@@ -107,20 +109,21 @@ document.addEventListener('DOMContentLoaded', () => {
           img = document.createElement('img');
           frontFace.appendChild(img);
 
-          img.style.position = 'absolute';
-          img.style.top = '50%';
-          img.style.left = '50%';
-          img.style.transform = 'translate(-50%, -50%) rotate(50deg)';
-          img.style.width = '120%';
-          img.style.height = '120%';
-          img.style.pointerEvents = 'none';
-          img.style.userSelect = 'none';
-          img.style.objectFit = 'contain';
+          // img.style.position = 'absolute';
+          // img.style.top = '50%';
+          // img.style.left = '50%';
+          // img.style.transform = 'translate(-50%, -50%) rotate(50deg)' ;
+          // img.style.width = '120%';
+          // img.style.height = '120%';
+          // img.style.pointerEvents = 'none';
+          // img.style.userSelect = 'none';
+          // img.style.objectFit = 'contain';
         }
 
         img.src = `img/${selectedMob}`;
       });
 
+      // Clique com o botão direito para remover monstro
       cube.addEventListener('contextmenu', e => {
         e.preventDefault();
         const frontFace = cube.querySelector('.front');
@@ -151,6 +154,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const rotateXVal = document.getElementById('rotateXVal');
   const rotateZVal = document.getElementById('rotateZVal');
 
+  // Valores iniciais estilo Dofus
+  zoomRange.value = 1.05;
+  rotateXRange.value = 30;
+  rotateZRange.value = -45;
+  updateTransform();
+
   function updateTransform() {
     const zoom = parseFloat(zoomRange.value);
     const rotX = parseFloat(rotateXRange.value);
@@ -161,14 +170,12 @@ document.addEventListener('DOMContentLoaded', () => {
     rotateZVal.textContent = rotZ;
 
     mapContainer.style.transform = `
-      scale(${zoom}) 
-      rotateX(${rotX}deg) 
-      rotateZ(${rotZ}deg) 
+      scale(${zoom})
+      rotateX(${rotX}deg)
+      rotateZ(${rotZ}deg)
       translateZ(0)
     `;
   }
-
-  updateTransform();
 
   zoomRange.addEventListener('input', updateTransform);
   rotateXRange.addEventListener('input', updateTransform);

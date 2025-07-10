@@ -1,35 +1,67 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>O Juramento de ambar V0.1</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>O Juramento de Ambar V0.2.4</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-    <body>
+  <!-- Painel lateral com controles -->
   <div id="sidebar">
-    <!-- Sidebar será preenchida via JS -->
     <div id="controls">
+      
+      <!-- Controle de Zoom -->
       <div class="control-group">
-        <label for="zoomRange">Zoom: <span id="zoomVal">1.05</label>
-        <input type="range" id="zoomRange" min="0.5" max="3" step="0.05" value="1.05" />
+        <label for="zoomRange">Zoom:</label>
+        <span id="zoomVal">1.0</span>
+        <input
+          type="range"
+          id="zoomRange"
+          min="0.5"
+          max="3"
+          step="0.05"
+          value="0"
+        />
       </div>
+
+      <!-- Controle de rotação X -->
       <div class="control-group">
-        <label for="rotateXRange">Rotação X: <span id="rotateXVal">45</label>
-        <input type="range" id="rotateXRange" min="0" max="90" step="1" value="45" />
+        <label for="rotateXRange">Rotação X:</label>
+        <span id="rotateXVal">30</span>
+        <input
+          type="range"
+          id="rotateXRange"
+          min="0"
+          max="90"
+          step="0.05"
+          value="0"
+        />
       </div>
+
+      <!-- Controle de rotação Z -->
       <div class="control-group">
-        <label for="rotateZRange">Rotação Z: <span id="rotateZVal">-50</label>
-        <input type="range" id="rotateZRange" min="-180" max="0" step="1" value="-50" />
+        <label for="rotateZRange">Rotação Z:</label>
+        <span id="rotateZVal">-45</span>
+        <input
+          type="range"
+          id="rotateZRange"
+          min="-180"
+          max="0"
+          step="0.05"
+          value="0"
+        />
       </div>
+
     </div>
   </div>
 
+  <!-- Área do tabuleiro 3D -->
   <div id="map-wrapper">
     <div id="map-container"></div>
   </div>
-    <script src="js/script.js"></script>
-</body>
 
+  <!-- Script principal do jogo -->
+  <script src="js/script.js"></script>
+</body>
 </html>
