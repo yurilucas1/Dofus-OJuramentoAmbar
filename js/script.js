@@ -101,35 +101,33 @@ document.addEventListener('DOMContentLoaded', () => {
           alert('Selecione um monstro na sidebar primeiro!');
           return;
         }
-        const frontFace = cube.querySelector('.front');
-        frontFace.style.backgroundImage = '';
-
-        let img = frontFace.querySelector('img');
-        if (!img) {
-          img = document.createElement('img');
-          frontFace.appendChild(img);
-
-          // img.style.position = 'absolute';
-          // img.style.top = '50%';
-          // img.style.left = '50%';
-          // img.style.transform = 'translate(-50%, -50%) rotate(50deg)' ;
-          // img.style.width = '120%';
-          // img.style.height = '120%';
-          // img.style.pointerEvents = 'none';
-          // img.style.userSelect = 'none';
-          // img.style.objectFit = 'contain';
-        }
-
+      
+        // Remove a imagem existente (se houver)
+        const existingImg = cube.querySelector('img');
+        if (existingImg) existingImg.remove();
+      
+        // Cria uma nova imagem como filha direta do cubo
+        const img = document.createElement('img');
         img.src = `img/${selectedMob}`;
+        img.classList.add("imageInsert");
+
+        // Estilização básica (opcional)
+        // img.style.position = 'absolute';
+        // img.style.width = '40px';  // Ajuste conforme necessário
+        // img.style.height = '40px';
+        // img.style.objectFit = 'cover'; // Ou 'contain' para ver o monstro inteiro
+        // img.style.transform = 'translateZ(30px)';
+      
+        // Adiciona a imagem ao cubo (como irmão das faces)
+        cube.appendChild(img);
       });
 
       // Clique com o botão direito para remover monstro
       cube.addEventListener('contextmenu', e => {
         e.preventDefault();
-        const frontFace = cube.querySelector('.front');
-        frontFace.style.backgroundImage = '';
-        const img = frontFace.querySelector('img');
-        if (img) {
+        
+        const img = cube.querySelector('img');
+        if (img){
           img.remove();
         }
       });
